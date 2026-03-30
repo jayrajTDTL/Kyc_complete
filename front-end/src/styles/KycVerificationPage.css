@@ -1,0 +1,29 @@
+.kyc-verification-page {
+  padding: 24px;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  min-height: calc(100vh - var(--navbar-height));
+  position: relative;
+  background: transparent;
+}
+
+.kyc-verification-page::before {
+  content: none;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.kyc-verification-page > * {
+  position: relative;
+  z-index: 1;
+  animation: pageFadeUp 0.45s ease;
+}
+
+@media (max-width: 768px) {
+  .kyc-verification-page {
+    padding: 16px;
+  }
+}
