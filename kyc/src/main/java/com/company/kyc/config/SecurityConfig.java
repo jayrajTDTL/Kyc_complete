@@ -17,7 +17,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
  
 @Configuration
 public class SecurityConfig {
- 
+    
     private final JwtAuthFilter jwtAuthFilter;
  
     public SecurityConfig(JwtAuthFilter jwtAuthFilter) {
@@ -33,7 +33,20 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/api/auth/**","/*").permitAll()
+                        .requestMatchers(
+                            "/api/auth/**",
+                            "/testing/**",
+                            "/",
+                            "/index.html",
+                            "/static/**",        // React's JS/CSS chunks
+                            "/favicon.ico",
+                            "/manifest.json",
+                            "/logo*.png",
+                            "/*.js",
+                            "/*.css",
+                            "/*.json"
+                        )
+                        .permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
  

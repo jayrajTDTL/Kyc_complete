@@ -8,12 +8,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.core.annotation.Order;
+
 
 @Controller
 @CrossOrigin("*")
+@Order(Integer.MAX_VALUE)  // ← lowest priority, runs last
 public class PageController {
-    @RequestMapping(value = {"/", "/{path:^(?!api|.*\\.).*$}/**"})
-    public String redirect() {
+    @GetMapping(value = "/{path:^(?!api|static)[^\\.]*}")
+    public String redirectRoot() {
+        return "forward:/index.html";
+    }
+
+    @GetMapping(value = "/{path:^(?!api|static)[^\\.]*}/**")
+    public String redirectNested() {
         return "forward:/index.html";
     }
 }
