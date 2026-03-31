@@ -1374,47 +1374,39 @@ function getRiskResult(form) {
 
 function normalizeKycApiResult(apiData, form) {
   const fallback = getRiskResult(form);
-  const data = apiData && typeof apiData === "object" ? apiData : {};
+  const top  = apiData && typeof apiData === "object" ? apiData : {};
 
-  const caseId = data.caseId || data.case_id || data.referenceId || "N/A";
-  const name = data.finalName || data.name || data.fullName || data.customerName || fallback.name;
-  const pan = data.pan || data.panNumber || data.panNo || fallback.pan;
+  // unwrap nested kycResult if present
+  const kyc  = (top.kycResult && typeof top.kycResult === "object") ? top.kycResult : top;
 
-  const rawScore = data.riskScore ?? data.risk_score ?? data.score ?? data.risk;
-  const parsedScore = Number(rawScore);
-  const riskScore = Number.isFinite(parsedScore)
-    ? Math.min(100, Math.max(0, parsedScore))
+  const caseId = top.caseId || top.case_id || top.referenceId || kyc.caseId || "N/A";
+
+  // ── 3 dynamic fields from kycResult ──
+  const rawScore   = kyc.riskScore ?? kyc.risk_score ?? kyc.score ?? fallback.riskScore;
+  const riskScore  = Number.isFinite(Number(rawScore))
+    ? Math.min(100, Math.max(0, Math.round(Number(rawScore))))
     : fallback.riskScore;
 
-  const identityScore = Number.isFinite(Number(data.identityScore)) ? Number(data.identityScore) : null;
-  const fraudScore    = Number.isFinite(Number(data.fraudScore))    ? Number(data.fraudScore)    : null;
-  const message       = data.message || "";
+  const rawStatus  = String(kyc.status || kyc.kycStatus || "").trim().toUpperCase();
+  const statusMap  = { REJECT: "REJECTED", APPROVE: "APPROVED" };
+  const mapped     = statusMap[rawStatus] || rawStatus;
+  const status     = ["APPROVED", "REJECTED", "REVIEW"].includes(mapped)
+    ? mapped
+    : riskScore >= 70 ? "REJECTED" : riskScore >= 45 ? "REVIEW" : "APPROVED";
 
-  const rawStatus = String(
-    data.status || data.kycStatus || data.verificationStatus || data.result || ""
-  ).trim().toUpperCase();
-
-  // normalise REJECT → REJECTED, APPROVE → APPROVED
-  const statusMap = { REJECT: "REJECTED", APPROVE: "APPROVED" };
-  const mappedStatus = statusMap[rawStatus] || rawStatus;
-
-  const status = ["APPROVED", "REJECTED", "REVIEW"].includes(mappedStatus)
-    ? mappedStatus
-    : riskScore >= 70
-    ? "REJECTED"
-    : riskScore >= 45
-    ? "REVIEW"
-    : "APPROVED";
-
-  // support both fraudSignals (new API) and fraudFlags (legacy)
-  const rawFlags =
-    data.fraudSignals || data.fraudFlags || data.fraud_flags || data.flags || data.reasons || data.remarks;
-
-  const fraudFlags = Array.isArray(rawFlags)
-    ? rawFlags.map((item) => String(item).trim()).filter(Boolean)
-    : typeof rawFlags === "string" && rawFlags.trim()
-    ? [rawFlags.trim()]
+  const rawSignals = kyc.fraudSignals || kyc.fraudFlags || kyc.fraud_flags || [];
+  const fraudFlags = Array.isArray(rawSignals)
+    ? rawSignals.map((s) => String(s).trim()).filter(Boolean)
+    : typeof rawSignals === "string" && rawSignals.trim()
+    ? [rawSignals.trim()]
     : [];
+
+  // ── remaining fields (static fallbacks ok) ──
+  const message       = kyc.message || top.message || "";
+  const identityScore = Number.isFinite(Number(kyc.identityScore)) ? Number(kyc.identityScore) : null;
+  const fraudScore    = Number.isFinite(Number(kyc.fraudScore))    ? Number(kyc.fraudScore)    : null;
+  const name          = kyc.finalName || kyc.name || top.finalName || fallback.name;
+  const pan           = top.pan || top.panNumber || fallback.pan;
 
   return { caseId, name, pan, riskScore, identityScore, fraudScore, message, status, fraudFlags };
 }
@@ -2040,6 +2032,27 @@ export default function KycVerification() {
   };
 
   const handleUpload = async (key, file) => {
+    if (!file) return;
+
+    // ── File type & size validation ──
+    const isImage = /\.(jpg|jpeg|png)$/i.test(file.name);
+    const isPdf   = /\.pdf$/i.test(file.name);
+    const IMAGE_MAX = 2 * 1024 * 1024;   // 2 MB
+    const PDF_MAX   = 15 * 1024 * 1024;  // 15 MB
+
+    if (!isImage && !isPdf) {
+      setSuccessMessage("Only JPG, JPEG, PNG, or PDF files are allowed.");
+      return;
+    }
+    if (isImage && file.size > IMAGE_MAX) {
+      setSuccessMessage("Image files must be 2 MB or smaller.");
+      return;
+    }
+    if (isPdf && file.size > PDF_MAX) {
+      setSuccessMessage("PDF files must be 15 MB or smaller.");
+      return;
+    }
+
     setUploads((prev) => ({ ...prev, [key]: file }));
     setResult(null);
     if (currentStep === "Completed") {
@@ -2283,6 +2296,7 @@ export default function KycVerification() {
                 name="fullName"
                 label={FIELD_LABELS.fullName}
                 value={form.fullName}
+                maxLength={10}
                 onChange={(e) => updateField("fullName", e.target.value)}
                 onBlur={() => handleBlur("fullName")}
                 error={errors.fullName}
@@ -2372,7 +2386,7 @@ export default function KycVerification() {
                 file={uploads.panFile}
                 onFileSelect={(file) => handleUpload("panFile", file)}
                 documentType="pancard"
-                accept=".jpg,.jpeg"
+                accept=".jpg,.jpeg,.png,.pdf"
                 disabled={isDisabled}
                 loading={ocrLoading}
               />
@@ -2381,7 +2395,7 @@ export default function KycVerification() {
                 file={uploads.aadhaarFile}
                 onFileSelect={(file) => handleUpload("aadhaarFile", file)}
                 documentType="aadhaar"
-                accept=".jpg,.jpeg"
+                accept=".jpg,.jpeg,.png,.pdf"
                 disabled={isDisabled}
               />
               <UploadBox
@@ -2389,7 +2403,7 @@ export default function KycVerification() {
                 file={uploads.bankStatementFile}
                 onFileSelect={(file) => handleUpload("bankStatementFile", file)}
                 documentType="bankstatement"
-                accept=".pdf"
+                accept=".jpg,.jpeg,.png,.pdf"
                 disabled={isDisabled}
               />
             </div>

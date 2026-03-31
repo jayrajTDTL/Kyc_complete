@@ -12,7 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/api/kyc")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://192.168.0.132:3000/")
+//@CrossOrigin(origins = "http://192.168.0.132:3000/")
+@CrossOrigin(origins = "http://localhost:3000/")
 public class KycController {
 
     private final KycService kycService;
@@ -24,6 +25,7 @@ public class KycController {
             @RequestParam("aadhaar") MultipartFile aadharFile,
             @RequestParam("bank") MultipartFile statementFile) {
         KycProcessResponseDto response = kycService.processKyc(panFile, aadharFile, statementFile);
+        System.out.println(response);
         return ResponseEntity.ok(response);
     }
 

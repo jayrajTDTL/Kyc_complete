@@ -7,7 +7,8 @@ import com.company.kyc.service.AuthService;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "http://192.168.0.132:3000/")
+//@CrossOrigin(origins = "http://192.168.0.132:3000/")
+@CrossOrigin(origins = "http://localhost:3000/")
 public class AuthController {
 
     private final AuthService authService;

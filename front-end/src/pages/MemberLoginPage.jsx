@@ -89,31 +89,67 @@ export default function MemberLoginPage() {
     if (!password) { setError('Password is required.'); return; }
     setLoading(true);
 
-    // ── Admin hardcoded credentials ──
+    // ── Admin — fixed credentials, real API token ──
     if (loginType === 'admin') {
-      if (mobile.trim() === '9999999999' && password.trim() === 'Admin@KYC2025') {
-        login({ name: 'Administrator', mobileno: '9999999999', role: 'ADMIN' }, 'admin-token');
-        localStorage.setItem('authToken', 'admin-token');
+      const ADMIN_MOBILE = '9999999999';
+      const ADMIN_PASS   = 'Admin@KYC2025';
+      if (mobile.trim() !== ADMIN_MOBILE || password.trim() !== ADMIN_PASS) {
+        setError('Invalid admin credentials.');
+        setLoading(false);
+        return;
+      }
+      try {
+        const res = await fetch(`${URL}api/auth/login`, {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ mobileno: ADMIN_MOBILE, password: ADMIN_PASS }),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || !data.token) {
+          setError('Admin account not found. Please register it in the backend first.');
+          setLoading(false);
+          return;
+        }
+        login({ name: 'Administrator', mobileno: ADMIN_MOBILE, role: 'ADMIN' }, data.token);
+        localStorage.setItem('authToken', data.token);
         navigate('/admin-dashboard');
         setLoading(false);
         return;
-      } else {
-        setError('Invalid admin credentials.');
+      } catch {
+        setError('Unable to connect. Please try again.');
         setLoading(false);
         return;
       }
     }
 
-    // ── Compliance Officer hardcoded credentials ──
+    // ── Compliance Officer — fixed credentials, real API token ──
     if (loginType === 'compliance') {
-      if (mobile.trim() === '8888888888' && password.trim() === 'Compliance@KYC2025') {
-        login({ name: 'Compliance Officer', mobileno: '8888888888', role: 'COMPLIANCE_OFFICER' }, 'compliance-token');
-        localStorage.setItem('authToken', 'compliance-token');
+      const COMPLIANCE_MOBILE = '8888888888';
+      const COMPLIANCE_PASS   = 'Compliance@KYC2025';
+      if (mobile.trim() !== COMPLIANCE_MOBILE || password.trim() !== COMPLIANCE_PASS) {
+        setError('Invalid compliance officer credentials.');
+        setLoading(false);
+        return;
+      }
+      try {
+        const res = await fetch(`${URL}api/auth/login`, {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ mobileno: COMPLIANCE_MOBILE, password: COMPLIANCE_PASS }),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || !data.token) {
+          setError('Compliance account not found. Please register it in the backend first.');
+          setLoading(false);
+          return;
+        }
+        login({ name: 'Compliance Officer', mobileno: COMPLIANCE_MOBILE, role: 'COMPLIANCE_OFFICER' }, data.token);
+        localStorage.setItem('authToken', data.token);
         navigate('/compliance-dashboard');
         setLoading(false);
         return;
-      } else {
-        setError('Invalid compliance officer credentials.');
+      } catch {
+        setError('Unable to connect. Please try again.');
         setLoading(false);
         return;
       }

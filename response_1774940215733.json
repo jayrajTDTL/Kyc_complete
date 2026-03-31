@@ -1,0 +1,141 @@
+{
+  "status": "completed",
+  "mode": "upload_and_check_all",
+  "documents": {
+    "pan": {
+      "provider_used": "groq",
+      "forensics": {
+        "is_tampered": false,
+        "reason": "Clean",
+        "ela_max_diff": 7,
+        "fft_high_freq_ratio": 32.62
+      },
+      "ocr_data": {
+        "document_type": "pan",
+        "name": "SHIVRAJ GORAKSHNATH PATARE",
+        "father_name": "GORAKSHNATH RAMCHANDRA PATARE",
+        "dob": "14/04/2003",
+        "pan": "GFVPP0717M"
+      },
+      "normalized_data": {
+        "document_type": "pan",
+        "name": "SHIVRAJ GORAKSHNATH PATARE",
+        "father_name": "GORAKSHNATH RAMCHANDRA PATARE",
+        "dob": "2003-04-14",
+        "pan": "GFVPP0717M"
+      },
+      "local_validation": {
+        "document_type": "pan",
+        "is_valid": true,
+        "score": 100,
+        "normalized_fields": {
+          "name": "SHIVRAJ GORAKSHNATH PATARE",
+          "dob": "2003-04-14",
+          "pan": "GFVPP0717M"
+        },
+        "issues": [],
+        "summary": "strong"
+      }
+    },
+    "aadhaar": {
+      "provider_used": "groq",
+      "forensics": {
+        "is_tampered": false,
+        "reason": "Clean",
+        "ela_max_diff": 25,
+        "fft_high_freq_ratio": 40.83
+      },
+      "ocr_data": {
+        "document_type": "aadhaar",
+        "name": "Shivraj Gorakshnath Patare",
+        "dob": "14/04/2003",
+        "gender": "Male",
+        "aadhaar": "XXXXXXXX1332",
+        "address": null,
+        "is_masked": false
+      },
+      "normalized_data": {
+        "document_type": "aadhaar",
+        "name": "SHIVRAJ GORAKSHNATH PATARE",
+        "dob": "2003-04-14",
+        "gender": "Male",
+        "aadhaar": "XXXXXXXX1332",
+        "address": null,
+        "is_masked": false
+      },
+      "local_validation": {
+        "document_type": "aadhaar",
+        "is_valid": true,
+        "score": 100,
+        "is_masked": false,
+        "normalized_fields": {
+          "name": "SHIVRAJ GORAKSHNATH PATARE",
+          "dob": "2003-04-14",
+          "aadhaar": "294284321332"
+        },
+        "issues": [],
+        "summary": "strong"
+      }
+    },
+    "bank": {
+      "provider_used": "groq",
+      "forensics": {
+        "is_tampered": false,
+        "reason": "Clean",
+        "ela_max_diff": 178,
+        "fft_high_freq_ratio": 63.15
+      },
+      "ocr_data": {
+        "document_type": "bank",
+        "customer_name": "SHIVRAJ GORAKSHNATH PATARE",
+        "account_number": "50100683865085",
+        "ifsc": "HDFC0000456",
+        "bank_name": "HDFC BANK",
+        "branch": "NASHIK ROAD",
+        "statement_period": "01/03/2026 - 25/03/2026"
+      },
+      "normalized_data": {
+        "document_type": "bank",
+        "customer_name": "SHIVRAJ GORAKSHNATH PATARE",
+        "account_number": "50100683865085",
+        "ifsc": "HDFC0000456",
+        "bank_name": "HDFC BANK",
+        "branch": "NASHIK ROAD",
+        "statement_period": "01/03/2026 - 25/03/2026"
+      },
+      "local_validation": {
+        "document_type": "bank",
+        "is_valid": true,
+        "score": 100,
+        "normalized_fields": {
+          "customer_name": "SHIVRAJ GORAKSHNATH PATARE",
+          "account_number": "50100683865085",
+          "ifsc": "HDFC0000456"
+        },
+        "issues": [],
+        "summary": "strong"
+      }
+    }
+  },
+  "sandbox_verification": null,
+  "cross_document_comparison": {
+    "scores": {
+      "pan_vs_aadhaar_name": 100,
+      "pan_vs_bank_name": 100,
+      "aadhaar_vs_bank_name": 100,
+      "pan_vs_aadhaar_dob": 100
+    },
+    "signals": [],
+    "average_name_score": 100,
+    "official_pan_verified": false,
+    "decision": "PASS"
+  },
+  "decision": {
+    "verdict": "APPROVE",
+    "average_document_score": 100,
+    "comparison_decision": "PASS",
+    "signals": [],
+    "message": "All documents validated successfully. Low risk profile."
+  },
+  "timestamp": "2026-03-31T06:56:55.710214Z"
+}

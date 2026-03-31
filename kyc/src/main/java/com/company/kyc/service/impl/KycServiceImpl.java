@@ -371,7 +371,6 @@ public class KycServiceImpl implements KycService {
                 finalStatus = combinedResponse.getKycResult().getStatus();
                 displayMessage = combinedResponse.getKycResult().getMessage();
             }
-
             return response;
 
         } catch (Exception e) {
@@ -414,7 +413,6 @@ public class KycServiceImpl implements KycService {
         ValidationResult validation = new ValidationResult();
         validation.isComplete = kycDataOpt.isPresent();
         response.setDisplayMessage(generateDisplayMessage(kycCase.getStatus(), validation));
-
         return response;
     }
 
