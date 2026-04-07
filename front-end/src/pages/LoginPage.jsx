@@ -312,7 +312,7 @@ export default function ReKycRegister() {
                 <IcoHouse />
               </div>
               <div>
-                <div style={{ fontFamily:font.serif, fontSize:'1.9rem', fontWeight:700, color:C.navy, lineHeight:1.05, background:`linear-gradient(95deg, ${C.navy} 10%, ${C.navyMid} 52%, ${C.gold} 100%)`, WebkitBackgroundClip:'text', backgroundClip:'text', color:'transparent' }}>Project</div>
+                <div style={{ fontFamily:font.serif, fontSize:'1.9rem', fontWeight:700, color:C.navy, lineHeight:1.05, background:`linear-gradient(95deg, ${C.navy} 10%, ${C.navyMid} 52%, ${C.gold} 100%)`, WebkitBackgroundClip:'text', backgroundClip:'text', color:'transparent' }}>Re-KYC Portal</div>
                 <div style={{ fontSize:'0.62rem', color:C.g600, fontWeight:600, textTransform:'uppercase', letterSpacing:'0.68px', whiteSpace:'nowrap' }}>AI-Powered Identity Verification and KYC Automation Platform</div>
               </div>
             </a>
@@ -342,14 +342,6 @@ export default function ReKycRegister() {
               <p style={{ fontSize:'0.95rem', color:'#b0c4d8', lineHeight:1.65, maxWidth:520, marginBottom:'2rem' }}>
                 Complete your periodic Know Your Customer update in compliance with RBI and NHB directives. Your information is encrypted and processed under strict data protection guidelines.
               </p>
-              <div style={{ display:'flex', gap:'2.5rem', flexWrap:'wrap' }}>
-                {[['₹12,400 Cr','Loans Disbursed'],['2.5L+','Active Members'],['37 Yrs','Of Service']].map(([n,l])=>(
-                  <div key={l}>
-                    <div style={{ fontFamily:font.serif, fontSize:'1.8rem', fontWeight:700, color:C.goldLight, lineHeight:1 }}>{n}</div>
-                    <div style={{ fontSize:'0.72rem', color:'#8aaac4', textTransform:'uppercase', letterSpacing:'0.6px', marginTop:'0.2rem' }}>{l}</div>
-                  </div>
-                ))}
-              </div>
             </div>
             <div className="resp-hero-right" style={{ flexShrink:0, display:'flex', flexDirection:'column', gap:'0.75rem', minWidth:220 }}>
               {['RBI Regulated Institution','256-bit SSL Encrypted','AI-Powered Document Verification','ISO 27001 Certified'].map(t=>(
@@ -364,7 +356,6 @@ export default function ReKycRegister() {
         {/* Breadcrumb */}
         <div style={{ background:C.white, borderBottom:`1px solid ${C.g200}`, padding:'0.65rem 2rem' }}>
           <div style={{ maxWidth:1200, margin:'0 auto', display:'flex', alignItems:'center', gap:'0.5rem', fontSize:'0.78rem', color:C.g400 }}>
-            <IcoHome />&nbsp;<a href="/" style={{ color:C.navy, textDecoration:'none', fontWeight:500 }}>Home</a>
             <span style={{ color:C.g300 }}>›</span>
             <a href="/" style={{ color:C.navy, textDecoration:'none', fontWeight:500 }}>Member Services</a>
             <span style={{ color:C.g300 }}>›</span>
@@ -660,7 +651,7 @@ export default function ReKycRegister() {
         <footer style={{ background:C.navyDark, color:'#7a94ad', marginTop:'auto' }}>
           <div className="resp-footer-main" style={{ maxWidth:1200, margin:'0 auto', padding:'2.5rem 2rem', display:'grid', gridTemplateColumns:'2fr 1fr 1fr', gap:'2.5rem' }}>
             <div>
-              <div style={{ fontFamily:font.serif, fontSize:'1.22rem', fontWeight:700, color:C.white, marginBottom:'0.5rem' }}>Project</div>
+              <div style={{ fontFamily:font.serif, fontSize:'1.22rem', fontWeight:700, color:C.white, marginBottom:'0.5rem' }}>Re-KYC Portal</div>
               <p style={{ fontSize:'0.8rem', lineHeight:1.6, color:'#7a94ad', maxWidth:280 }}>A government-backed cooperative housing finance institution committed to making homeownership accessible and affordable for every Indian family since 1987.</p>
             </div>
             <div>
@@ -681,7 +672,7 @@ export default function ReKycRegister() {
             </div>
           </div>
           <div style={{ borderTop:'1px solid rgba(255,255,255,0.07)', padding:'1rem 2rem', textAlign:'center', fontSize:'0.72rem', color:'#4a6070' }}>
-            © {new Date().getFullYear()} Project. All rights reserved. | Regulated by National Housing Bank | CIN: U65922DL1987GOI000000
+            © {new Date().getFullYear()} Re-KYC Portal. All rights reserved. | Regulated by National Housing Bank | CIN: U65922DL1987GOI000000
           </div>
         </footer>
 

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/aadhaar")
-@CrossOrigin(origins = "http://192.168.0.132:3000/")
+@CrossOrigin(origins = "http://192.168.0.89:3000/")
 public class AadhaarController {
 
     private final AadhaarService aadhaarService;

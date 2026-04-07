@@ -91,106 +91,114 @@ public class OcrClient {
 
         combined.setStatus(root.path("status").asText());
 
-        if (root.has("documents")) {
+        JsonNode summaryNode = root.path("summary");
+        JsonNode resultsNode = summaryNode.path("results");
 
-            JsonNode documentsNode = root.get("documents");
-            OcrCombinedResponseDto.OcrData ocrData = new OcrCombinedResponseDto.OcrData();
+        OcrCombinedResponseDto.OcrData ocrData = new OcrCombinedResponseDto.OcrData();
 
-            /* ---------------- PAN ---------------- */
-            if (documentsNode.has("pan")) {
+        /* ---------------- PAN ---------------- */
+        String panSummary = resultsNode.path("pan_summary").asText("");
+        if (!panSummary.isEmpty()) {
+            OcrCombinedResponseDto.OcrData.PanData panData =
+                    new OcrCombinedResponseDto.OcrData.PanData();
 
-                JsonNode panNode = documentsNode.get("pan").path("ocr_data");
+            panData.setName(extractValue(panSummary, "Name: "));
+            panData.setDate_of_birth(extractValue(panSummary, "Dob: "));
+            panData.setPan_no(extractValue(panSummary, "Pan: "));
+            panData.setFather_name(null); // not present in new response
 
-                if (!panNode.isMissingNode()) {
-
-                    OcrCombinedResponseDto.OcrData.PanData panData =
-                            new OcrCombinedResponseDto.OcrData.PanData();
-
-                    panData.setPan_no(panNode.path("pan").asText());
-                    panData.setName(panNode.path("name").asText());
-                    panData.setDate_of_birth(panNode.path("dob").asText());
-                    panData.setFather_name(panNode.path("father_name").asText());
-
-                    ocrData.setPan(panData);
-                }
-            }
-
-            /* ---------------- AADHAAR ---------------- */
-            if (documentsNode.has("aadhaar")) {
-
-                JsonNode aadhaarNode = documentsNode.get("aadhaar").path("ocr_data");
-
-                if (!aadhaarNode.isMissingNode()) {
-
-                    OcrCombinedResponseDto.OcrData.AadhaarData aadhaarData =
-                            new OcrCombinedResponseDto.OcrData.AadhaarData();
-
-                    aadhaarData.setAadhaar_no(aadhaarNode.path("aadhaar").asText());
-                    aadhaarData.setName(aadhaarNode.path("name").asText());
-                    aadhaarData.setDate_of_birth(aadhaarNode.path("dob").asText());
-
-                    ocrData.setAadhaar(aadhaarData);
-                }
-            }
-
-            /* ---------------- BANK STATEMENT ---------------- */
-            if (documentsNode.has("bank")) {
-
-                JsonNode bankNode = documentsNode.get("bank").path("ocr_data");
-
-                if (!bankNode.isMissingNode()) {
-
-                    OcrCombinedResponseDto.OcrData.StatementData statementData =
-                            new OcrCombinedResponseDto.OcrData.StatementData();
-
-                    statementData.setAccount_no(bankNode.path("account_number").asText());
-                    statementData.setIfsc_code(bankNode.path("ifsc").asText(null));
-                    statementData.setName(bankNode.path("customer_name").asText());
-                    statementData.setAddress(bankNode.path("address").asText());
-
-                    ocrData.setStatement(statementData);
-                }
-            }
-
-            combined.setOcrData(ocrData);
+            ocrData.setPan(panData);
         }
+
+        /* ---------------- AADHAAR ---------------- */
+        String aadhaarSummary = resultsNode.path("aadhaar_summary").asText("");
+        if (!aadhaarSummary.isEmpty()) {
+            OcrCombinedResponseDto.OcrData.AadhaarData aadhaarData =
+                    new OcrCombinedResponseDto.OcrData.AadhaarData();
+
+            aadhaarData.setName(extractValue(aadhaarSummary, "Name: "));
+            aadhaarData.setDate_of_birth(extractValue(aadhaarSummary, "Dob: "));
+            aadhaarData.setAadhaar_no(extractValue(aadhaarSummary, "Aadhaar: "));
+
+            ocrData.setAadhaar(aadhaarData);
+        }
+
+        /* ---------------- BANK STATEMENT ---------------- */
+        String bankSummary = resultsNode.path("bank_summary").asText("");
+        if (!bankSummary.isEmpty()) {
+            OcrCombinedResponseDto.OcrData.StatementData statementData =
+                    new OcrCombinedResponseDto.OcrData.StatementData();
+
+            statementData.setName(extractValue(bankSummary, "Customer Name: "));
+            statementData.setAccount_no(extractValue(bankSummary, "Account Number: "));
+            statementData.setIfsc_code(extractValue(bankSummary, "Ifsc: "));
+            statementData.setAddress(null); // not present in new response
+
+            ocrData.setStatement(statementData);
+        }
+
+        combined.setOcrData(ocrData);
 
         /* ---------------- DECISION / KYC RESULT ---------------- */
+        JsonNode crossDocNode = summaryNode.path("cross_document_comparison");
 
-        if (root.has("decision")) {
+        OcrCombinedResponseDto.KycResult result = new OcrCombinedResponseDto.KycResult();
 
-            JsonNode decisionNode = root.get("decision");
+        // Use cross_document_comparison.decision as the verdict
+        result.setStatus(crossDocNode.path("decision").asText());
 
-            OcrCombinedResponseDto.KycResult result =
-                    new OcrCombinedResponseDto.KycResult();
+        // identity_score mapped from average_name_score
+        result.setIdentityScore(crossDocNode.path("average_name_score").asInt());
 
-            result.setStatus(decisionNode.path("verdict").asText());
-            result.setIdentityScore(decisionNode.path("identity_score").asInt());
-            result.setFraudScore(decisionNode.path("fraud_score").asInt()); // not present in API
-            result.setRiskScore(Double.valueOf(decisionNode.path("risk_score").asInt())); // not present in API
-            result.setFinalName(
-                    root.path("documents")
-                            .path("pan")
-                            .path("normalized_data")
-                            .path("name")
-                            .asText()
-            );
-            result.setMessage(decisionNode.path("message").asText());
-
-            if (decisionNode.has("signals")) {
-                result.setFraudSignals(
-                        objectMapper.convertValue(
-                                decisionNode.get("signals"),
-                                new com.fasterxml.jackson.core.type.TypeReference<List<String>>() {}
-                        )
-                );
-            }
-
-            combined.setKycResult(result);
+        // risk_score from overall_risk_score
+        result.setRiskScore(summaryNode.path("overall_risk_score").asDouble());
+        System.out.println("Risk Score: " + result.getRiskScore());
+        if(result.getRiskScore() > 15){
+            result.setStatus("Rejected");
+        } else if(result.getRiskScore() > 5){
+            result.setStatus("Rejected");
+        } else {
+            result.setStatus("Approved");
         }
+
+        // fraud_score not present — default to 0
+        result.setFraudScore(result.getRiskScore() > 10 ? 80 : 5); // simple heuristic for demo
+
+        // finalName from PAN data parsed above
+        result.setFinalName(
+                ocrData.getPan() != null ? ocrData.getPan().getName() : ""
+        );
+
+        // message from overall_decision
+        result.setMessage(summaryNode.path("overall_decision").asText());
+
+        // fraud signals from cross_document_comparison.signals
+        if (crossDocNode.has("signals")) {
+            result.setFraudSignals(
+                    objectMapper.convertValue(
+                            crossDocNode.get("signals"),
+                            new com.fasterxml.jackson.core.type.TypeReference<List<String>>() {}
+                    )
+            );
+        }
+
+        combined.setKycResult(result);
 
         System.out.println("FINAL DTO -> " + combined);
 
         return combined;
+    }
+
+    /**
+     * Extracts a value from summary strings like:
+     * "... Data fetched -> Name: ADITYA GORAKSHNATH PATARE, Dob: 2003-04-14, ..."
+     * Splits on the label and takes everything up to the next comma or end of string.
+     */
+    private String extractValue(String text, String label) {
+        int idx = text.indexOf(label);
+        if (idx == -1) return null;
+        String after = text.substring(idx + label.length());
+        int comma = after.indexOf(',');
+        return comma == -1 ? after.trim() : after.substring(0, comma).trim();
     }
 }

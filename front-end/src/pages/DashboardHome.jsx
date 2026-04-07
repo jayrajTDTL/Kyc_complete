@@ -73,42 +73,6 @@ export const DashboardHome = () => {
           </button>
         </section>
       </div>
-
-      <div className="dashboard-insights-grid">
-        <section className="panel-card">
-          <div className="panel-head">
-            <h3>KYC Status Tracker</h3>
-            <span className="panel-caption">Step-by-step progress</span>
-          </div>
-          <div className="tracker-progress-meta">
-            <span>Overall progress</span>
-            <strong>{completionPercent}% Complete</strong>
-          </div>
-          <div className="tracker-progress-track">
-            <div className="tracker-progress-fill" style={{ width: `${completionPercent}%` }} />
-          </div>
-          <div className="status-tracker">
-            {statusSteps.map((step, idx) => (
-              <div key={step} className="tracker-step">
-                <div className={`step-dot ${idx <= currentStep ? 'active' : ''}`}>{idx + 1}</div>
-                <div className="step-label">{step}</div>
-                {idx < statusSteps.length - 1 && <div className="step-line" />}
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="panel-card recent-card">
-          <div className="panel-head">
-            <h3>Recent Activity</h3>
-            <span className="panel-caption">Latest customer actions</span>
-          </div>
-          <Table
-            headers={['Activity', 'Date & Time', 'Status']}
-            rows={activityRows}
-          />
-        </section>
-      </div>
     </div>
   );
 };

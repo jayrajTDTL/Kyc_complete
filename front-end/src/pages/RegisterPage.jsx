@@ -89,7 +89,7 @@ export default function RegisterPage() {
             <div style={{ width:80, height:80, background:`linear-gradient(145deg,${C.navy},${C.navyMid})`, borderRadius:'50%', border:`3px solid ${C.gold}`, display:'flex', alignItems:'center', justifyContent:'center', color:C.white, margin:'0 auto 2rem' }}>
               <IcoHouse />
             </div>
-            <h1 style={{ fontFamily:font.serif, fontSize:'2.8rem', fontWeight:700, lineHeight:1.1, marginBottom:'0.75rem', background:`linear-gradient(92deg,#fff 8%,${C.goldLight} 56%,#f3cf73 100%)`, WebkitBackgroundClip:'text', backgroundClip:'text', color:'transparent' }}>Project</h1>
+            <h1 style={{ fontFamily:font.serif, fontSize:'2.8rem', fontWeight:700, lineHeight:1.1, marginBottom:'0.75rem', background:`linear-gradient(92deg,#fff 8%,${C.goldLight} 56%,#f3cf73 100%)`, WebkitBackgroundClip:'text', backgroundClip:'text', color:'transparent' }}>Re-KYC Portal</h1>
             <p style={{ fontSize:'0.88rem', color:'#c4d6e8', lineHeight:1.6, maxWidth:320, marginInline:'auto' }}>AI-Powered Identity Verification and KYC Automation Platform</p>
           </div>
         </div>

@@ -12,8 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/api/kyc")
 @RequiredArgsConstructor
-//@CrossOrigin(origins = "http://192.168.0.132:3000/")
-@CrossOrigin(origins = "http://localhost:3000/")
+@CrossOrigin(origins = "http://192.168.0.89:3000/")
+//@CrossOrigin(origins = "http://localhost:3000/")
 public class KycController {
 
     private final KycService kycService;

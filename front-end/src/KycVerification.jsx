@@ -145,7 +145,7 @@ body {
 
 .card h2 {
   margin: 0 0 18px;
-  font-size: 1.35rem;
+  font-size: 1rem;
 }
 
 .step-card {
@@ -1273,7 +1273,8 @@ const INITIAL_FORM = {
   address: "",
 };
 
-const REQUIRED_FIELDS = ["fullName", "dob", "pan", "aadhaar", "mobile", "address"];
+//const REQUIRED_FIELDS = ["fullName", "dob", "pan", "aadhaar", "mobile", "address"];
+const REQUIRED_FIELDS = [];
 
 const FIELD_LABELS = {
   fullName: "Full Name",
@@ -2244,51 +2245,7 @@ export default function KycVerification() {
         <StepTracker currentStep={currentStep} />
 
         <form className="kyc-form" onSubmit={handleSubmit}>
-          <section className="card slide-up">
-            <h2>KYC Method Selection</h2>
-            <div className="method-grid">
-              <label className={`method-option ${kycMethod === "upload" ? "active" : ""}`}>
-                <input
-                  type="radio"
-                  name="kycMethod"
-                  value="upload"
-                  checked={kycMethod === "upload"}
-                  onChange={() => setKycMethod("upload")}
-                  disabled={isDisabled}
-                />
-                <span>Upload Documents</span>
-              </label>
-              <label className={`method-option ${kycMethod === "digilocker" ? "active" : ""}`}>
-                <input
-                  type="radio"
-                  name="kycMethod"
-                  value="digilocker"
-                  checked={kycMethod === "digilocker"}
-                  onChange={() => setKycMethod("digilocker")}
-                  disabled={isDisabled}
-                />
-                <span>Fetch via DigiLocker</span>
-              </label>
-            </div>
-          </section>
-
-          <section className="card slide-up">
-            <div className="card-topline">
-              <h2>DigiLocker Section</h2>
-              <button
-                type="button"
-                className="digilocker-btn"
-                onClick={() => setIsDigiLockerModalOpen(true)}
-                disabled={isDisabled || kycMethod !== "digilocker"}
-              >
-                {digilockerLoading ? "Fetching DigiLocker..." : "Open DigiLocker"}
-              </button>
-            </div>
-            <p className="section-note">
-              Select "Fetch via DigiLocker" and complete login, OTP and consent flow.
-            </p>
-          </section>
-
+          
           <section className="card slide-up">
             <h2>Personal Details</h2>
             <div className="field-grid">
@@ -2346,7 +2303,6 @@ export default function KycVerification() {
               />
             </div>
           </section>
-
           <section className="card slide-up">
             <h2>Identity Details</h2>
             <div className="field-grid">
@@ -2416,7 +2372,7 @@ export default function KycVerification() {
               <button
                 className="submit-btn"
                 type="submit"
-                disabled={!isFormValid || isDisabled}
+                //disabled={!isFormValid || isDisabled}
               >
                 Submit KYC
               </button>

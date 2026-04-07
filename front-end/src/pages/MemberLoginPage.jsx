@@ -232,7 +232,7 @@ export default function MemberLoginPage() {
             <div style={{ width:80, height:80, background:`linear-gradient(145deg,${C.navy} 0%,${C.navyMid} 100%)`, borderRadius:'50%', border:`3px solid ${C.gold}`, display:'flex', alignItems:'center', justifyContent:'center', color:C.white, margin:'0 auto 2rem' }}>
               <IcoHouse />
             </div>
-            <h1 style={{ fontFamily:font.serif, fontSize:'3rem', fontWeight:700, color:C.white, marginBottom:'0.75rem', lineHeight:1.1, background:`linear-gradient(92deg, #ffffff 8%, ${C.goldLight} 56%, #f3cf73 100%)`, WebkitBackgroundClip:'text', backgroundClip:'text', color:'transparent', textShadow:'0 8px 26px rgba(7,26,54,0.4)' }}>Project</h1>
+            <h1 style={{ fontFamily:font.serif, fontSize:'3rem', fontWeight:700, color:C.white, marginBottom:'0.75rem', lineHeight:1.1, background:`linear-gradient(92deg, #ffffff 8%, ${C.goldLight} 56%, #f3cf73 100%)`, WebkitBackgroundClip:'text', backgroundClip:'text', color:'transparent', textShadow:'0 8px 26px rgba(7,26,54,0.4)' }}>Re-KYC Portal</h1>
             <p style={{ fontSize:'0.88rem', color:'#c4d6e8', lineHeight:1.6, marginBottom:'2rem', maxWidth:350, marginInline:'auto' }}>AI-Powered Identity Verification and KYC Automation Platform</p>
             
             <div style={{ display:'flex', flexDirection:'column', gap:'1rem' }}>

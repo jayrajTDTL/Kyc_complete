@@ -48,7 +48,7 @@ export const Navbar = ({ onMenuToggle, isMobile = false }) => {
               <img src={projectLogo} alt="Project logo" className="brand-logo" />
             </div>
             <div className="brand-text">
-              <h3>Project</h3>
+              <h3>Re-KYC portal</h3>
               <p>AI-Powered Identity Verification and KYC Automation Platform</p>
             </div>
           </button>
