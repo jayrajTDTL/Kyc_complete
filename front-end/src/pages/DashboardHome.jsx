@@ -51,7 +51,7 @@ export const DashboardHome = () => {
       </section>
 
       <div className="dashboard-grid customer-grid">
-        <section className="panel-card">
+        {/* <section className="panel-card">
           <div className="panel-head">
             <h3>KYC Status</h3>
             <span className="panel-caption">Current application state</span>
@@ -60,9 +60,9 @@ export const DashboardHome = () => {
             <span className="status-chip pending">{kycStatus}</span>
             <p>Your documents are being validated. We will notify you once verification is complete.</p>
           </div>
-        </section>
+        </section> */}
 
-        <section className="panel-card start-kyc-card">
+        <section className="panel-card start-kyc-card" >
           <div className="panel-head">
             <h3>Start KYC</h3>
             <span className="panel-caption">Begin a new verification</span>

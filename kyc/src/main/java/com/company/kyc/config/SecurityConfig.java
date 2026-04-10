@@ -52,6 +52,22 @@ public class SecurityConfig {
  
         return http.build();
     }
+
+    // @Bean
+    // public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+ 
+    //     http
+    //             .cors(cors -> {
+    //             })
+    //             .csrf(csrf -> csrf.disable())
+    //             .authorizeHttpRequests(auth -> auth
+    //                     .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+    //                     .requestMatchers("/api/auth/**").permitAll()
+    //                     .anyRequest().authenticated())
+    //             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+ 
+    //     return http.build();
+    // }
  
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {

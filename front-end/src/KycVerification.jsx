@@ -554,7 +554,7 @@ body {
 
 .upload-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
 }
 
@@ -2245,6 +2245,39 @@ export default function KycVerification() {
         <StepTracker currentStep={currentStep} />
 
         <form className="kyc-form" onSubmit={handleSubmit}>
+
+        {kycMethod === "upload" ? (
+          <section className="card slide-up delay-1">
+            <h2>Document Uploads</h2>
+            <div className="upload-grid">
+              <UploadBox
+                label="PAN Card Upload"
+                file={uploads.panFile}
+                onFileSelect={(file) => handleUpload("panFile", file)}
+                documentType="pancard"
+                accept=".jpg,.jpeg,.png,.pdf"
+                disabled={isDisabled}
+                loading={ocrLoading}
+              />
+              <UploadBox
+                label="Aadhaar Card Upload"
+                file={uploads.aadhaarFile}
+                onFileSelect={(file) => handleUpload("aadhaarFile", file)}
+                documentType="aadhaar"
+                accept=".jpg,.jpeg,.png,.pdf"
+                disabled={isDisabled}
+              />
+              {/* <UploadBox
+                label="Bank Statement Upload"
+                file={uploads.bankStatementFile}
+                onFileSelect={(file) => handleUpload("bankStatementFile", file)}
+                documentType="bankstatement"
+                accept=".jpg,.jpeg,.png,.pdf"
+                disabled={isDisabled}
+              /> */}
+            </div>
+          </section>
+          ) : null}
           
           <section className="card slide-up">
             <h2>Personal Details</h2>
@@ -2332,39 +2365,6 @@ export default function KycVerification() {
               />
             </div>
           </section>
-
-          {kycMethod === "upload" ? (
-          <section className="card slide-up delay-1">
-            <h2>Document Uploads</h2>
-            <div className="upload-grid">
-              <UploadBox
-                label="PAN Card Upload"
-                file={uploads.panFile}
-                onFileSelect={(file) => handleUpload("panFile", file)}
-                documentType="pancard"
-                accept=".jpg,.jpeg,.png,.pdf"
-                disabled={isDisabled}
-                loading={ocrLoading}
-              />
-              <UploadBox
-                label="Aadhaar Card Upload"
-                file={uploads.aadhaarFile}
-                onFileSelect={(file) => handleUpload("aadhaarFile", file)}
-                documentType="aadhaar"
-                accept=".jpg,.jpeg,.png,.pdf"
-                disabled={isDisabled}
-              />
-              <UploadBox
-                label="Bank Statement Upload"
-                file={uploads.bankStatementFile}
-                onFileSelect={(file) => handleUpload("bankStatementFile", file)}
-                documentType="bankstatement"
-                accept=".jpg,.jpeg,.png,.pdf"
-                disabled={isDisabled}
-              />
-            </div>
-          </section>
-          ) : null}
 
           <section className="actions slide-up delay-2">
             {successMessage ? <p className="status-message">{successMessage}</p> : null}

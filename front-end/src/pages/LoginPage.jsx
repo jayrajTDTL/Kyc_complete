@@ -305,26 +305,23 @@ export default function ReKycRegister() {
       <div style={{ fontFamily:font.sans, color:C.g800, WebkitFontSmoothing:'antialiased', minHeight:'100vh', display:'flex', flexDirection:'column' }}>
 
         {/* Header */}
-        <header style={{ background:C.white, borderBottom:`3px solid ${C.gold}`, boxShadow:shadow.md, position:'sticky', top:0, zIndex:100 }}>
-          <div style={{ maxWidth:1200, margin:'0 auto', padding:'0 2rem', display:'flex', alignItems:'center', justifyContent:'space-between', height:72, gap:'2rem' }}>
-            <a href="/" style={{ display:'flex', alignItems:'center', gap:'1rem', textDecoration:'none', flexShrink:0 }}>
-              <div style={{ width:48, height:48, background:`linear-gradient(145deg,${C.navy} 0%,${C.navyMid} 100%)`, borderRadius:'50%', border:`2px solid ${C.gold}`, display:'flex', alignItems:'center', justifyContent:'center', color:C.white }}>
+        <header style={{ background:`linear-gradient(135deg,${C.navyDark} 0%,${C.navy} 55%,${C.navyMid} 100%)`, borderBottom:`3px solid ${C.gold}`, boxShadow:shadow.md, position:'sticky', top:0, zIndex:100, width:'100%' }}>
+          <div style={{ maxWidth:1400, margin:'0 auto', padding:'0 clamp(1rem,3vw,2.5rem)', display:'flex', alignItems:'center', justifyContent:'space-between', minHeight:84, gap:'1rem' }}>
+            {/* Brand */}
+            <a href="/" style={{ display:'flex', alignItems:'center', gap:'0.85rem', textDecoration:'none', flexShrink:0, minWidth:0 }}>
+              <div style={{ width:52, height:52, flexShrink:0, background:`linear-gradient(145deg,rgba(212,168,67,0.22),rgba(200,156,61,0.14))`, borderRadius:14, border:`1.5px solid rgba(212,168,67,0.45)`, display:'flex', alignItems:'center', justifyContent:'center', color:C.white, boxShadow:'0 0 0 4px rgba(212,168,67,0.1),0 8px 20px rgba(8,29,56,0.35)' }}>
                 <IcoHouse />
               </div>
-              <div>
-                <div style={{ fontFamily:font.serif, fontSize:'1.9rem', fontWeight:700, color:C.navy, lineHeight:1.05, background:`linear-gradient(95deg, ${C.navy} 10%, ${C.navyMid} 52%, ${C.gold} 100%)`, WebkitBackgroundClip:'text', backgroundClip:'text', color:'transparent' }}>Re-KYC Portal</div>
-                <div style={{ fontSize:'0.62rem', color:C.g600, fontWeight:600, textTransform:'uppercase', letterSpacing:'0.68px', whiteSpace:'nowrap' }}>AI-Powered Identity Verification and KYC Automation Platform</div>
+              <div style={{ minWidth:0 }}>
+                <div style={{ fontFamily:font.serif, fontSize:'clamp(1.4rem,2.5vw,2rem)', fontWeight:800, lineHeight:1.05, background:`linear-gradient(95deg,#ffffff 4%,#f4d989 54%,#e2b44f 100%)`, WebkitBackgroundClip:'text', backgroundClip:'text', color:'transparent', whiteSpace:'nowrap' }}>Re-KYC Portal</div>
+                <div className="resp-header-sub" style={{ fontSize:'clamp(0.6rem,1vw,0.72rem)', color:'#d9e7f7', fontWeight:600, textTransform:'uppercase', letterSpacing:'0.6px', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis', maxWidth:'clamp(180px,30vw,460px)' }}>AI-Powered Identity Verification and KYC Automation Platform</div>
               </div>
             </a>
-            <nav className="resp-nav" style={{ display:'flex', alignItems:'center', gap:'0.25rem' }}>
-              {['Home','Loan Products','Interest Rates','About Us'].map(l=>(
-                <a key={l} href="/" style={{ fontSize:'0.85rem', fontWeight:500, color:C.g600, textDecoration:'none', padding:'0.5rem 0.85rem', borderRadius:6, whiteSpace:'nowrap' }}>{l}</a>
-              ))}
-              <a href="/" style={{ fontSize:'0.85rem', fontWeight:600, color:C.navy, textDecoration:'none', padding:'0.5rem 0.85rem', borderRadius:6, whiteSpace:'nowrap' }}>Member Services</a>
-              <button onClick={() => navigate('/member-login')} style={{ marginLeft:'0.5rem', padding:'0.5rem 1.25rem', background:C.navy, color:C.white, border:'none', borderRadius:6, fontSize:'0.85rem', fontWeight:600, cursor:'pointer', whiteSpace:'nowrap' }}>Login</button>
-            </nav>
-            <button className="resp-hamburger" style={{ display:'none', flexDirection:'column', gap:5, background:'none', border:'none', cursor:'pointer', padding:4 }} aria-label="Menu">
-              {[0,1,2].map(i=><span key={i} style={{ display:'block', width:22, height:2, background:C.navy, borderRadius:2 }}/>)}
+            {/* Login button */}
+            <button onClick={() => navigate('/member-login')} style={{ flexShrink:0, padding:'0.6rem 1.5rem', background:'rgba(255,255,255,0.12)', color:C.white, border:`1.5px solid rgba(255,255,255,0.3)`, borderRadius:8, fontSize:'0.88rem', fontWeight:700, cursor:'pointer', whiteSpace:'nowrap', transition:'all 0.2s', letterSpacing:'0.3px' }}
+              onMouseEnter={e=>{e.currentTarget.style.background='rgba(255,255,255,0.22)';e.currentTarget.style.borderColor='rgba(255,255,255,0.5)';}}
+              onMouseLeave={e=>{e.currentTarget.style.background='rgba(255,255,255,0.12)';e.currentTarget.style.borderColor='rgba(255,255,255,0.3)';}}>
+              Login
             </button>
           </div>
         </header>
@@ -343,13 +340,13 @@ export default function ReKycRegister() {
                 Complete your periodic Know Your Customer update in compliance with RBI and NHB directives. Your information is encrypted and processed under strict data protection guidelines.
               </p>
             </div>
-            <div className="resp-hero-right" style={{ flexShrink:0, display:'flex', flexDirection:'column', gap:'0.75rem', minWidth:220 }}>
+            {/* <div className="resp-hero-right" style={{ flexShrink:0, display:'flex', flexDirection:'column', gap:'0.75rem', minWidth:220 }}>
               {['RBI Regulated Institution','256-bit SSL Encrypted','AI-Powered Document Verification','ISO 27001 Certified'].map(t=>(
                 <div key={t} style={{ display:'flex', alignItems:'center', gap:'0.75rem', background:'rgba(255,255,255,0.07)', border:'1px solid rgba(255,255,255,0.12)', borderRadius:8, padding:'0.75rem 1rem', fontSize:'0.82rem', color:'#ccdae8', fontWeight:500 }}>
                   <IcoShield /> {t}
                 </div>
               ))}
-            </div>
+            </div> */}
           </div>
         </section>
 
@@ -609,7 +606,7 @@ export default function ReKycRegister() {
             </div>
 
             {/* Member Support */}
-            <div style={{ background:C.white, borderRadius:10, border:`1px solid ${C.g200}`, boxShadow:shadow.sm, overflow:'hidden' }}>
+            {/* <div style={{ background:C.white, borderRadius:10, border:`1px solid ${C.g200}`, boxShadow:shadow.sm, overflow:'hidden' }}>
               <div style={{ background:C.navy, color:C.white, padding:'0.85rem 1.25rem', fontSize:'0.82rem', fontWeight:700, textTransform:'uppercase', letterSpacing:'0.6px', display:'flex', alignItems:'center', gap:'0.5rem' }}>
                 <span style={{ color:C.goldLight }}><IcoPhone/></span> Member Support
               </div>
@@ -628,7 +625,7 @@ export default function ReKycRegister() {
                   </div>
                 ))}
               </div>
-            </div>
+            </div> */}
 
             {/* Security */}
             <div style={{ background:C.white, borderRadius:10, border:`1px solid ${C.g200}`, boxShadow:shadow.sm, overflow:'hidden' }}>
@@ -672,7 +669,7 @@ export default function ReKycRegister() {
             </div>
           </div>
           <div style={{ borderTop:'1px solid rgba(255,255,255,0.07)', padding:'1rem 2rem', textAlign:'center', fontSize:'0.72rem', color:'#4a6070' }}>
-            © {new Date().getFullYear()} Re-KYC Portal. All rights reserved. | Regulated by National Housing Bank | CIN: U65922DL1987GOI000000
+            © {new Date().getFullYear()} Re-KYC Portal. All rights reserved. | Project Nivas | CIN: U65922DL1987GOI000000
           </div>
         </footer>
 

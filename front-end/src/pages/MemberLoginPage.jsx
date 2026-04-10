@@ -159,7 +159,7 @@ export default function MemberLoginPage() {
       const res = await fetch(`${URL}api/auth/login`, {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ mobileno: mobile, password }),
+        body:    JSON.stringify({ mobileno: mobile, password : password}),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok || data.error) {
@@ -204,14 +204,14 @@ export default function MemberLoginPage() {
               </div>
               <div>
                 <div style={{ fontFamily:font.serif, fontSize:'1.2rem', fontWeight:700, color:C.white }}>Login Successful</div>
-                <div style={{ fontSize:'0.75rem', color:'rgba(255,255,255,0.6)', marginTop:'0.1rem' }}>Welcome back! Your session is active.</div>
+                <div style={{ fontSize:'0.75rem', color:'rgba(255,255,255,0.6)', marginTop:'0.1rem' }}>Welcome! Your session is active.</div>
               </div>
             </div>
 
             {/* Body */}
             <div style={{ padding:'1.5rem 1.75rem' }}>
               <p style={{ fontSize:'0.85rem', color:C.g600, marginBottom:'1.5rem', lineHeight:1.6 }}>
-                You have successfully signed in. Welcome back!
+                You have successfully signed in. Welcome!
               </p>
               <button type="button" onClick={() => { setShowModal(false); navigate('/dashboard'); }}
                 style={{ width:'100%', padding:'0.85rem 1rem', background:C.navy, color:C.white, border:'none', borderRadius:8, fontSize:'0.9rem', fontWeight:700, cursor:'pointer', letterSpacing:'0.3px' }}>
@@ -270,13 +270,13 @@ export default function MemberLoginPage() {
               <h2 style={{ fontFamily:font.serif, fontSize:'1.8rem', fontWeight:700, color:C.navy, marginBottom:'0.5rem' }}>
                 {loginType === 'admin' ? 'Admin Login' : loginType === 'compliance' ? 'Compliance Officer Login' : 'Login'}
               </h2>
-              <p style={{ fontSize:'0.9rem', color:C.g400 }}>
+              {/* <p style={{ fontSize:'0.9rem', color:C.g400 }}>
                 {loginType === 'admin'
                   ? 'Sign in with admin credentials to access the control panel'
                   : loginType === 'compliance'
                   ? 'Sign in to access the compliance monitoring dashboard'
                   : 'Sign in to your account to manage your KYC updates'}
-              </p>
+              </p> */}
             </div>
 
             <form onSubmit={handleSubmit} style={{ display:'flex', flexDirection:'column', gap:'1.25rem' }}>

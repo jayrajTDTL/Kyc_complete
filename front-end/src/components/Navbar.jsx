@@ -47,15 +47,15 @@ export const Navbar = ({ onMenuToggle, isMobile = false }) => {
             <div className="brand-icon">
               <img src={projectLogo} alt="Project logo" className="brand-logo" />
             </div>
-            <div className="brand-text">
+            <div className="brand-text" style={{textAlign:"left",margin:0}}>
               <h3>Re-KYC portal</h3>
               <p>AI-Powered Identity Verification and KYC Automation Platform</p>
             </div>
           </button>
 
           <div className="navbar-quick-info">
-            <span className="info-pill">Secure KYC</span>
-            <span className="info-pill muted">Updated: {today}</span>
+            {/* <span className="info-pill">Secure KYC</span> */}
+            {/* <span className="info-pill muted">Updated: {today}</span> */}
           </div>
         </div>
 

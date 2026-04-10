@@ -418,7 +418,7 @@ public class KycServiceImpl implements KycService {
 
     @Override
     public java.util.List<FraudResultSummaryDto> getAllFraudSummary() {
-        return fraudResultRepository.findAll().stream()
+        return fraudResultRepository.findAllOrderByIdDesc().stream()
                 .map(fraud -> FraudResultSummaryDto.builder()
                         .caseId(fraud.getCaseId())
                         .finalName(fraud.getFinalName())
