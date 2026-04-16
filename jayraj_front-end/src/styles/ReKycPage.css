@@ -1,0 +1,30 @@
+.rekyc-page {
+  padding: 24px;
+  max-width: 1260px;
+  margin: 0 auto;
+  min-height: calc(100vh - 60px);
+  position: relative;
+}
+
+.rekyc-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 11% 7%, rgba(15, 98, 200, 0.14), transparent 33%),
+    radial-gradient(circle at 90% 92%, rgba(21, 163, 143, 0.15), transparent 36%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.rekyc-page > * {
+  position: relative;
+  z-index: 1;
+  animation: pageFadeUp 0.45s ease;
+}
+
+@media (max-width: 768px) {
+  .rekyc-page {
+    padding: 16px;
+  }
+}
